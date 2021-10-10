@@ -1,0 +1,235 @@
+﻿<Page
+    x:Class="cryptex_uwp.Views.BlockCipherPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:myms="using:cryptex_uwp.Models"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="StrHexTextBox" x:DataType="myms:StrHexTexBox">
+            <StackPanel>
+                <muxc:RadioButtons MaxColumns="3" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                    <RadioButton x:Uid="StringFormatSelector" />
+                    <RadioButton x:Uid="HexFormatSelector" />
+                </muxc:RadioButtons>
+                <TextBox
+                    AcceptsReturn="True"
+                    AutomationProperties.Name="multi-line TextBox"
+                    Text="{Binding ContentStr, Mode=TwoWay}" />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
+        <Grid
+            Margin="{StaticResource SmallLeftTopRightBottomMargin}"
+            Padding="{StaticResource SmallLeftTopRightBottomMargin}"
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <StackPanel>
+
+                <muxc:InfoBar
+                    x:Name="INFO"
+                    Title="Title"
+                    IsOpen="False"
+                    Message="message..." />
+
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                    <!--  选择加密算法  -->
+                    <ComboBox
+                        x:Name="BlockCipherAlgorithm"
+                        x:Uid="BlockCipher_SelectAlgorithmComboBox"
+                        Width="150"
+                        Margin="0,0,10,0"
+                        SelectedValue="{x:Bind ViewModel.CipherAlgorithm, Mode=TwoWay}"
+                        SelectionChanged="BlockCipherAlgorithm_SelectionChanged">
+                        <x:String>AES</x:String>
+                        <x:String>DES</x:String>
+                        <x:String>3DES</x:String>
+                        <x:String>SM4</x:String>
+                        <x:String>RC2</x:String>
+                        <x:String>RC6</x:String>
+                        <x:String>RC532</x:String>
+                        <x:String>RC564</x:String>
+                        <x:String>Rijndael</x:String>
+                        <x:String>SEED</x:String>
+                        <x:String>SKIPJACK</x:String>
+                        <x:String>TEA</x:String>
+                        <x:String>XTEA</x:String>
+                        <x:String>Twofish</x:String>
+                    </ComboBox>
+
+                    <!--  选择加密模式  -->
+                    <ComboBox
+                        x:Name="CipherMode"
+                        x:Uid="BlockCipher_CipherMode"
+                        Width="150"
+                        Margin="10,0,10,0"
+                        SelectedValue="{x:Bind ViewModel.CipherMode, Mode=TwoWay}"
+                        SelectionChanged="CipherMode_SelectionChanged">
+                        <x:String>CBC</x:String>
+                        <x:String>ECB</x:String>
+                        <x:String>CFB</x:String>
+                        <x:String>CTR</x:String>
+                        <x:String>OFB</x:String>
+                        <x:String>GCM</x:String>
+                    </ComboBox>
+
+                    <ToggleSwitch
+                        x:Uid="BlockCipherPadding"
+                        Margin="10,0,10,0"
+                        IsOn="{x:Bind ViewModel.IsPadding, Mode=TwoWay}" />
+
+                </StackPanel>
+
+                <!--  description  -->
+                <StackPanel>
+                    <Button Click="AlgoDescButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                        <FontIcon
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="10"
+                            Glyph="&#xe897;" />
+                    </Button>
+                    <StackPanel x:Name="AlgoDescBlock" Visibility="Collapsed">
+
+                        <HyperlinkButton x:Name="AlgoHiperLink" />
+                        <Border Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                            <TextBlock
+                                x:Name="AlgoDescTextBlock"
+                                Margin="10,0,20,20"
+                                TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+
+                </StackPanel>
+
+
+                <!--  密钥/IV  -->
+                <StackPanel x:Name="KeyStack" Margin="0,20,0,20">
+                    <muxc:RadioButtons
+                        x:Name="KeyFormat"
+                        x:Uid="BlockCIpher_RB_KeyFormat"
+                        MaxColumns="3"
+                        SelectedIndex="{x:Bind ViewModel.KeyFormatIndex, Mode=TwoWay}">
+                        <RadioButton x:Uid="StringFormatSelector" />
+                        <RadioButton x:Uid="HexFormatSelector" />
+                    </muxc:RadioButtons>
+                    <TextBox
+                        x:Name="CipherKey"
+                        AcceptsReturn="True"
+                        AutomationProperties.Name="multi-line TextBox"
+                        Text="{x:Bind ViewModel.KeyContent, Mode=TwoWay}" />
+                </StackPanel>
+
+                <!--  关联数据 (GCM)  -->
+                <StackPanel
+                    x:Name="AssociatedContent"
+                    Margin="0,20,0,20"
+                    Visibility="Collapsed">
+                    <muxc:RadioButtons
+                        x:Name="Associated"
+                        x:Uid="AssoF"
+                        MaxColumns="3">
+                        <RadioButton x:Uid="StringFormatSelector" />
+                        <RadioButton x:Uid="HexFormatSelector" />
+                    </muxc:RadioButtons>
+                    <TextBox
+                        AcceptsReturn="True"
+                        AutomationProperties.Name="multi-line TextBox"
+                        Text="{x:Bind ViewModel.AsoContent, Mode=TwoWay}" />
+                </StackPanel>
+
+                <StackPanel x:Name="IVStack" Margin="0,20,0,20">
+                    <muxc:RadioButtons
+                        x:Name="IVFormat"
+                        x:Uid="BlockCIpher_RB_IVFormat"
+                        MaxColumns="3"
+                        SelectedIndex="{x:Bind ViewModel.IVFormatIndex, Mode=TwoWay}">
+                        <RadioButton x:Uid="StringFormatSelector" />
+                        <RadioButton x:Uid="HexFormatSelector" />
+                    </muxc:RadioButtons>
+                    <TextBox
+                        x:Name="CipherIVOrNonce"
+                        AcceptsReturn="True"
+                        AutomationProperties.Name="multi-line TextBox"
+                        Text="{x:Bind ViewModel.IVContent, Mode=TwoWay}" />
+                </StackPanel>
+
+
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <!--  明文  -->
+                    <StackPanel
+                        x:Name="Plain"
+                        Grid.Column="0"
+                        Margin="0,0,5,0">
+                        <muxc:RadioButtons
+                            x:Name="InputFormat"
+                            x:Uid="BlockCipher_TX_PlainFormat"
+                            MaxColumns="3"
+                            SelectedIndex="{x:Bind ViewModel.PlaintextFormatIndex, Mode=TwoWay}">
+                            <RadioButton x:Uid="StringFormatSelector" />
+                            <RadioButton x:Uid="HexFormatSelector" />
+                        </muxc:RadioButtons>
+                        <TextBox
+                            x:Name="PlainText"
+                            MinHeight="200"
+                            MaxHeight="800"
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="multi-line TextBox"
+                            Text="{x:Bind ViewModel.PlaintextContent, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        x:Name="Cipher"
+                        Grid.Column="1"
+                        Margin="5,0,0,0">
+                        <muxc:RadioButtons
+                            x:Name="OutputFormat"
+                            x:Uid="BlockCipher_TX_CipherFormat"
+                            MaxColumns="3"
+                            SelectedIndex="1">
+                            <RadioButton x:Uid="StringFormatSelector" />
+                            <RadioButton x:Uid="HexFormatSelector" />
+                        </muxc:RadioButtons>
+                        <TextBox
+                            x:Name="CipherText"
+                            MinHeight="200"
+                            MaxHeight="800"
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="multi-line TextBox"
+                            Text="{x:Bind ViewModel.CiphertextContent, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Margin="0,20,0,20" Orientation="Horizontal">
+                    <Button
+                        x:Name="EncryptButton"
+                        x:Uid="BlockCipher_EncryptButton"
+                        Width="100"
+                        Margin="0,0,10,0"
+                        Click="EncryptButton_Click" />
+                    <Button
+                        x:Name="DecryptButton"
+                        x:Uid="BlockCipher_DecryptButton"
+                        Width="100"
+                        Margin="10,0,0,0"
+                        Click="DecryptButton_Click" />
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+        </Grid>
+    </ScrollViewer>
+</Page>
