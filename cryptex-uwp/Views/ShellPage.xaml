@@ -33,6 +33,18 @@
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
 
+            <winui:NavigationViewItem x:Uid="Shell_HASH" helpers:NavHelper.NavigateTo="views:HASHPage">
+                <winui:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF4AA;" />
+                </winui:NavigationViewItem.Icon>
+            </winui:NavigationViewItem>
+
+            <winui:NavigationViewItem x:Uid="Shell_PKI" helpers:NavHelper.NavigateTo="views:PKIPage">
+                <winui:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEF90;" />
+                </winui:NavigationViewItem.Icon>
+            </winui:NavigationViewItem>
+
         </winui:NavigationView.MenuItems>
         <i:Interaction.Behaviors>
             <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ViewModel.Selected.Content, Mode=OneWay}">

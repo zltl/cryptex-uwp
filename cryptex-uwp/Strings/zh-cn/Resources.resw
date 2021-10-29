@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>加密、解密、AES、SM2 等算法调试</value>
+    <value>大地加密调试器</value>
     <comment>Application display name</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>大地加密调试器</value>
+    <value>加密、解密、AES、SM2 等算法调试</value>
     <comment>Application description</comment>
   </data>
   <data name="Shell_BlockCipher.Content" xml:space="preserve">
@@ -200,5 +200,31 @@
   </data>
   <data name="StringFormatSelector.Content" xml:space="preserve">
     <value>字符串</value>
+  </data>
+  <data name="CSR.Header" xml:space="preserve">
+    <value>证书签名请求 (CSR)</value>
+  </data>
+  <data name="IssCrt.Header" xml:space="preserve">
+    <value>签发者证书</value>
+  </data>
+  <data name="IssKey.Header" xml:space="preserve">
+    <value>签发者密钥</value>
+  </data>
+  <data name="SelfS.Content" xml:space="preserve">
+    <value>自签名</value>
+  </data>
+  <data name="Shell_HASH.Content" xml:space="preserve">
+    <value>哈希</value>
+    <comment>Navigation view item name for HASH</comment>
+  </data>
+  <data name="Shell_PKI.Content" xml:space="preserve">
+    <value>证书</value>
+    <comment>Navigation view item name for PKI</comment>
+  </data>
+  <data name="SubCrt.Header" xml:space="preserve">
+    <value>主体的证书</value>
+  </data>
+  <data name="SubK.Header" xml:space="preserve">
+    <value>主体的密钥</value>
   </data>
 </root>

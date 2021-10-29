@@ -98,7 +98,7 @@
                     <StackPanel x:Name="AlgoDescBlock" Visibility="Collapsed">
 
                         <HyperlinkButton x:Name="AlgoHiperLink" />
-                        <Border Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                        <Border>
                             <TextBlock
                                 x:Name="AlgoDescTextBlock"
                                 Margin="10,0,20,20"

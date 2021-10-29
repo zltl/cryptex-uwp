@@ -1,0 +1,236 @@
+﻿<Page
+    x:Class="cryptex_uwp.Views.PKIPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:cryptex_uwp.Models"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Enabled">
+        <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+            <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+                <!--
+                    The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content.
+                    Place your content here.
+                -->
+
+                <StackPanel>
+
+                    <muxc:InfoBar
+                        x:Name="INFO"
+                        Title="Title"
+                        IsOpen="False"
+                        Message="message..." />
+
+                    <!--  密钥  -->
+                    <StackPanel Margin="0,20,0,10">
+                        <TextBox
+                            x:Uid="SubK"
+                            Height="200"
+                            AcceptsReturn="True"
+                            PlaceholderText="openssl genrsa -out private_rsa.pem 2048&#10;openssl ecparam -name prime256v1 -genkey -noout -out private_ec.pem&#10;openssl ecparam -name SM2 -genkey -noout -out private_sm2.pem"
+                            ScrollViewer.VerticalScrollMode="Auto"
+                            Text="{x:Bind ViewModel.SubjectKeyPem, Mode=TwoWay}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <muxc:RadioButtons
+                                x:Name="SubjectKeyTypeSelectButton"
+                                MaxColumns="4"
+                                SelectedIndex="{x:Bind ViewModel.SubjectKeyType, Mode=TwoWay}">
+                                <RadioButton Content="RSA" />
+                                <RadioButton Content="ECC" />
+                                <RadioButton Content="SM2" />
+                            </muxc:RadioButtons>
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                <Button Click="ShowSubjectKeyButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" />
+                                </Button>
+                                <Button Click="NewSubjectKeyButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xf143;" />
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <!--  view key  -->
+                        <controls:DataGrid
+                            x:Name="ViewSubjecttKeyDataGrid"
+                            AutoGenerateColumns="False"
+                            GridLinesVisibility="Horizontal"
+                            HeadersVisibility="None"
+                            ItemsSource="{x:Bind ViewModel.SubjectKeyViewSource, Mode=TwoWay}">
+                            <controls:DataGrid.Columns>
+                                <controls:DataGridTextColumn Binding="{Binding First}" />
+                                <controls:DataGridTextColumn Binding="{Binding Second}" />
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+                    </StackPanel>
+
+                    <!--  CSR  -->
+                    <StackPanel Margin="0,10,0,10">
+                        <TextBox
+                            x:Uid="CSR"
+                            MinWidth="200"
+                            MinHeight="200"
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="multi-line TextBox"
+                            PlaceholderText="openssl req -new -key private.pem -out csr.pem"
+                            Text="{x:Bind ViewModel.CsrPem, Mode=TwoWay}" />
+
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="ViewCsrButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" />
+                        </Button>
+                        <Button Click="NewCSRButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xf143;" />
+                        </Button>
+                        <Button Click="UpdateCSRButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe752;" />
+                        </Button>
+                    </StackPanel>
+                    <!--  view csr  -->
+                    <controls:DataGrid
+                        x:Name="ViewCsrDataGrid"
+                        AutoGenerateColumns="False"
+                        GridLinesVisibility="Horizontal"
+                        HeadersVisibility="None"
+                        ItemsSource="{x:Bind ViewModel.CsrViewSource, Mode=TwoWay}">
+                        <controls:DataGrid.Columns>
+                            <controls:DataGridTextColumn Binding="{Binding First}" />
+                            <controls:DataGridTextColumn Binding="{Binding Second}" />
+                        </controls:DataGrid.Columns>
+                    </controls:DataGrid>
+
+
+                    <Button
+                        x:Uid="SelfS"
+                        Margin="0,20,0,20"
+                        Click="SelfSignButton_Click" />
+
+                    <!--  issuer CA  -->
+                    <StackPanel
+                        x:Name="IssuerCrtInfo"
+                        Margin="0,20,0,10"
+                        Visibility="Visible">
+
+                        <TextBox
+                            x:Uid="IssKey"
+                            Height="200"
+                            AcceptsReturn="True"
+                            PlaceholderText="openssl genrsa -out ca_private_rsa.pem 2048&#10;openssl ecparam -name prime256v1 -genkey -noout -out ca_private_ec.pem&#10;openssl ecparam -name SM2 -genkey -noout -out ca_private_sm2.pem"
+                            ScrollViewer.VerticalScrollMode="Auto"
+                            Text="{x:Bind ViewModel.IssuerKeyPem, Mode=TwoWay}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <muxc:RadioButtons
+                                x:Name="IssuerKeyTypeSelectButton"
+                                MaxColumns="4"
+                                SelectedIndex="{x:Bind ViewModel.IssuerKeyType, Mode=TwoWay}">
+                                <RadioButton Content="RSA" />
+                                <RadioButton Content="ECC" />
+                                <RadioButton Content="SM2" />
+                            </muxc:RadioButtons>
+                            <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                <Button Click="ShowIssuerKeyButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" />
+                                </Button>
+                                <Button Click="NewIssuerKeyButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xf143;" />
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!--  view key  -->
+                        <controls:DataGrid
+                            x:Name="ViewIssuerKeyDataGrid"
+                            AutoGenerateColumns="False"
+                            GridLinesVisibility="Horizontal"
+                            HeadersVisibility="None"
+                            ItemsSource="{x:Bind ViewModel.IssuerKeyViewSource, Mode=TwoWay}">
+                            <controls:DataGrid.Columns>
+                                <controls:DataGridTextColumn Binding="{Binding First}" />
+                                <controls:DataGridTextColumn Binding="{Binding Second}" />
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+
+                        <TextBox
+                            x:Uid="IssCrt"
+                            MinWidth="200"
+                            MinHeight="200"
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="multi-line TextBox"
+                            PlaceholderText="openssl req -x509 -new -nodes -key CA.key -sha256 -days 36500 -out CA.crt"
+                            Text="{x:Bind ViewModel.IssuerCrtPem, Mode=TwoWay}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Click="ViewIssuerCrtButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" />
+                            </Button>
+                            <Button Click="NewIssuerCrtButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xf143;" />
+                            </Button>
+                            <Button Click="UpdateIssuerCrtButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe752;" />
+                            </Button>
+                        </StackPanel>
+                        <!--  view crt  -->
+                        <controls:DataGrid
+                            x:Name="ViewIssuerCrtDataGrid"
+                            AutoGenerateColumns="False"
+                            GridLinesVisibility="Horizontal"
+                            HeadersVisibility="None"
+                            ItemsSource="{x:Bind ViewModel.IssuerCrtViewSource, Mode=TwoWay}">
+                            <controls:DataGrid.Columns>
+                                <controls:DataGridTextColumn Binding="{Binding First}" />
+                                <controls:DataGridTextColumn Binding="{Binding Second}" />
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+                    </StackPanel>
+
+                    <!--  generated crt  -->
+                    <StackPanel Margin="0,20,0,10">
+                        <TextBox
+                            x:Uid="SubCrt"
+                            MinWidth="200"
+                            MinHeight="200"
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="multi-line TextBox"
+                            PlaceholderText="openssl x509 -req -in server.csr -CA CA.crt -CAkey CA.key -CAcreateserial -out server.crt -days 36500 -sha256"
+                            Text="{x:Bind ViewModel.SubjectCrtPem, Mode=TwoWay}" />
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Click="ViewSubjectCrtButton_Click" Style="{StaticResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe7b3;" />
+                            </Button>
+                            <Button Click="NewSubjectCrtButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xf143;" />
+                            </Button>
+                            <Button Click="UpdateSubjectCrtButton_Click" Style="{ThemeResource TextBlockButtonStyle}">
+                                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe752;" />
+                            </Button>
+                        </StackPanel>
+                        <!--  view subject crt  -->
+                        <controls:DataGrid
+                            x:Name="ViewSubjectCrtDataGrid"
+                            AutoGenerateColumns="False"
+                            GridLinesVisibility="Horizontal"
+                            HeadersVisibility="None"
+                            ItemsSource="{x:Bind ViewModel.SubjectCrtViewSource, Mode=TwoWay}">
+                            <controls:DataGrid.Columns>
+                                <controls:DataGridTextColumn Binding="{Binding First}" />
+                                <controls:DataGridTextColumn Binding="{Binding Second}" />
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+                    </StackPanel>
+                </StackPanel>
+
+
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>
+

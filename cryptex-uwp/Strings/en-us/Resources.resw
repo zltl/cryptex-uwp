@@ -122,7 +122,7 @@
     <comment>Application display name</comment>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>cryptex_uwp</value>
+    <value>encrypt,decrypt debugging tool</value>
     <comment>Application description</comment>
   </data>
   <data name="Shell_BlockCipher.Content" xml:space="preserve">
@@ -200,5 +200,31 @@
   </data>
   <data name="StringFormatSelector.Content" xml:space="preserve">
     <value>String Literal</value>
+  </data>
+  <data name="Shell_PKI.Content" xml:space="preserve">
+    <value>PKI</value>
+    <comment>Navigation view item name for PKI</comment>
+  </data>
+  <data name="Shell_HASH.Content" xml:space="preserve">
+    <value>HASH</value>
+    <comment>Navigation view item name for HASH</comment>
+  </data>
+  <data name="CSR.Header" xml:space="preserve">
+    <value>Certificate Sign Request</value>
+  </data>
+  <data name="IssCrt.Header" xml:space="preserve">
+    <value>Issuer's Certificate</value>
+  </data>
+  <data name="IssKey.Header" xml:space="preserve">
+    <value>Issuer's Key</value>
+  </data>
+  <data name="SelfS.Content" xml:space="preserve">
+    <value>Self Sign</value>
+  </data>
+  <data name="SubCrt.Header" xml:space="preserve">
+    <value>Subject's Certificate</value>
+  </data>
+  <data name="SubK.Header" xml:space="preserve">
+    <value>Subject‘s Key</value>
   </data>
 </root>
