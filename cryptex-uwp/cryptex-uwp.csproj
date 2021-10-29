@@ -172,12 +172,16 @@
     <Compile Include="Services\DragAndDrop\VisualDropConfiguration.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\ThemeSelectorService.cs" />
+    <Compile Include="ViewModels\Base64ViewModel.cs" />
     <Compile Include="ViewModels\BlockCipherViewModel.cs" />
     <Compile Include="ViewModels\HASHViewModel.cs" />
     <Compile Include="ViewModels\PKIViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Models\StrHexTexBox.cs" />
+    <Compile Include="Views\Base64Page.xaml.cs">
+      <DependentUpon>Base64Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BlockCipherPage.xaml.cs">
       <DependentUpon>BlockCipherPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +224,10 @@
     <Page Include="Styles\TextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Base64Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\BlockCipherPage.xaml">
       <Generator>MSBuild:Compile</Generator>

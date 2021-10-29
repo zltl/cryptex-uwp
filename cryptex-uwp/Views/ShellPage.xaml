@@ -20,7 +20,7 @@
 
     <winui:NavigationView
         x:Name="navigationView"
-        Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+        Background="{ThemeResource SystemControlAcrylicWindowBrush}"
         IsBackButtonVisible="Visible"
         IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
         IsSettingsVisible="True"
@@ -42,6 +42,12 @@
             <winui:NavigationViewItem x:Uid="Shell_PKI" helpers:NavHelper.NavigateTo="views:PKIPage">
                 <winui:NavigationViewItem.Icon>
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xEF90;" />
+                </winui:NavigationViewItem.Icon>
+            </winui:NavigationViewItem>
+
+            <winui:NavigationViewItem x:Uid="Shell_Base64" helpers:NavHelper.NavigateTo="views:Base64Page">
+                <winui:NavigationViewItem.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE724;" />
                 </winui:NavigationViewItem.Icon>
             </winui:NavigationViewItem>
 

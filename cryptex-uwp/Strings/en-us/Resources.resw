@@ -154,11 +154,11 @@
     <comment>About this application description for Settings</comment>
   </data>
   <data name="Settings_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy Statement</value>
+    <value>More Info</value>
     <comment>Privacy Statement link content for Settings</comment>
   </data>
   <data name="Settings_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://YourPrivacyUrlGoesHere/</value>
+    <value>https://quant67.com</value>
     <comment>Here is your Privacy Statement url for Settings</comment>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
@@ -226,5 +226,9 @@
   </data>
   <data name="SubK.Header" xml:space="preserve">
     <value>Subject‘s Key</value>
+  </data>
+  <data name="Shell_Base64.Content" xml:space="preserve">
+    <value>Base64</value>
+    <comment>Navigation view item name for Base64</comment>
   </data>
 </root>

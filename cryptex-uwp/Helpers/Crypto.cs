@@ -46,7 +46,6 @@ namespace cryptex_uwp.Helpers
                 case "XTEA":
                     return new XteaEngine();
                 default:
-                    // TODO: exception
                     throw new Exception(String.Format("unkown algorithm: {0}", algo));
             }
         }
