@@ -47,11 +47,11 @@ namespace cryptex_uwp.Views
                     case "Base64":
                         ViewModel.CiphertextContent = Convert.ToBase64String(ViewModel.PlaintexBytes);
                         break;
-                    case "Bsse64URL":
+                    case "Base64URL":
                         ViewModel.CiphertextContent = base64URL(ViewModel.PlaintexBytes);
                         break;
                     default:
-                        throw Exception($"unkown algorithm {ViewModel.BaseAlgorithm}");
+                        throw new Exception($"unkown algorithm {ViewModel.BaseAlgorithm}");
                 }
 
             }
@@ -61,11 +61,6 @@ namespace cryptex_uwp.Views
                 INFO.Title = "!Exception";
                 INFO.IsOpen = true;
             }
-        }
-
-        private Exception Exception(string v)
-        {
-            throw new NotImplementedException();
         }
 
         private void StartBaseDecodeButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -78,11 +73,11 @@ namespace cryptex_uwp.Views
                     case "Base64":
                         ViewModel.PlaintexBytes = Convert.FromBase64String(ViewModel.CiphertextContent);
                         break;
-                    case "Bsse64URL":
-                        ViewModel.PlaintexBytes = Encoding.Default.GetBytes(base64URL(ViewModel.PlaintexBytes));
+                    case "Base64URL":
+                        ViewModel.PlaintexBytes = base64URLDecode(ViewModel.CiphertextContent);
                         break;
                     default:
-                        throw Exception($"unkown algorithm {ViewModel.BaseAlgorithm}");
+                        throw new Exception($"unkown algorithm {ViewModel.BaseAlgorithm}");
                 }
 
             }
